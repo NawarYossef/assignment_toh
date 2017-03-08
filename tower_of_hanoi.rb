@@ -140,46 +140,46 @@ class TowerOfHanoi
     puts " *_*_*_*_*_*_*_*_*_*"
   end
 
-def play
-  clear_system
-  welcome_message
-  freeze
-
-  prompt "Would you like to play (y/n)"
-  play_game?
-  player_score = 0
-
-  loop do #outer loop
-    board = board_initialize
-    loop do #inner loop
-      clear_system
-      display_board(board)
-      prompt "Enter move"
-      current_collumn = gets.chomp.to_i
-      prompt "Enter new place"
-      new_collumn = gets.chomp.to_i
-
-      if current_collumn_valid?(current_collumn, board) && new_collumn_valid?(new_collumn, board)
-        render_board(current_collumn, new_collumn, board)
-      else
-        prompt "Invalid Entry"
-      end
-
-      if start_coll_not_winning_coll?(board) && player_win?(board)
+  def play
+    clear_system
+    welcome_message
+    freeze
+  
+    prompt "Would you like to play (y/n)"
+    play_game?
+    player_score = 0
+  
+    loop do #outer loop
+      board = board_initialize
+      loop do #inner loop
         clear_system
-        break
+        display_board(board)
+        prompt "Enter move"
+        current_collumn = gets.chomp.to_i
+        prompt "Enter new place"
+        new_collumn = gets.chomp.to_i
+  
+        if current_collumn_valid?(current_collumn, board) && new_collumn_valid?(new_collumn, board)
+          render_board(current_collumn, new_collumn, board)
+        else
+          prompt "Invalid Entry"
+        end
+  
+        if start_coll_not_winning_coll?(board) && player_win?(board)
+          clear_system
+          break
+        end
       end
+      display_board(board)
+      player_score += 1
+      winning_message(player_score)
+      prompt "Would you like to play again?"
+      prompt "(y => yes, n => no)"
+      answer = gets.chomp.to_s.downcase
+      break unless answer.downcase == 'y'
     end
-    display_board(board)
-    player_score += 1
-    winning_message(player_score)
-    prompt "Would you like to play again?"
-    prompt "(y => yes, n => no)"
-    answer = gets.chomp.to_s.downcase
-    break unless answer.downcase == 'y'
-  end
-
-  goodbye_message
+  
+    goodbye_message
   end
 end
 
